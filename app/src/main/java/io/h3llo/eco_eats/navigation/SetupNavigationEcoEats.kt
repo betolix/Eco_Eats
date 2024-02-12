@@ -16,20 +16,20 @@ fun SetupNavigationEcoEats(){
 
     NavHost(
         navController = navController,
-        startDestination = "welcome_screen"
+        startDestination = Screen.Welcome.route
     ){
-        composable(route = "welcome_screen"){
+        composable(route = Screen.Welcome.route ){
             WelcomeScreen(
                 onNavigation = {
                     navController.popBackStack()
-                    navController.navigate(route="on_boarding_screen")
+                    navController.navigate(route=Screen.OnBoarding.route)
                 }
             )
         }
-        composable(route = "on_boarding_screen"){
+        composable(route = Screen.OnBoarding.route){
             OnBoardingScreen()
         }
-        composable(route = "login_screen") {
+        composable(route = Screen.Login.route) {
             LoginScreen()
         }
     }
