@@ -8,10 +8,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun WelcomeScreen(navController: NavController) {
+fun WelcomeScreen(
+    onNavigation:()->Unit
+) {
     Button(onClick = {
-        navController.popBackStack()
-        navController.navigate(route = "on_boarding_screen")}) {
+        onNavigation()
+        }) {
         Text(text = "Navegar")
 
         
@@ -21,5 +23,5 @@ fun WelcomeScreen(navController: NavController) {
 @Preview (showSystemUi = true)
 @Composable
 fun WelcomeScreenPreview() {
-    WelcomeScreen(rememberNavController())
+    WelcomeScreen(onNavigation = {})
 }
