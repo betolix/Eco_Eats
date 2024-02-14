@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import io.h3llo.eco_eats.R
+import io.h3llo.eco_eats.presentation.components.ButtonComponent
 import io.h3llo.eco_eats.presentation.components.ImageComponent
 import io.h3llo.eco_eats.presentation.components.SpacerComponent
 import io.h3llo.eco_eats.presentation.components.TextComponent
@@ -49,7 +51,9 @@ fun WelcomeScreen(
         Box(modifier = Modifier
             .fillMaxWidth()
             .weight(1f)
-            .background(Color.Gray)){
+            .background(Color.Gray),
+            contentAlignment = Alignment.BottomCenter
+            ){
             WelcomeContent()
 
 
@@ -60,6 +64,19 @@ fun WelcomeScreen(
 
 @Composable
 fun WelcomeContent() {
+
+    ImageComponent(
+        modifier = Modifier.fillMaxSize(),
+        image = R.drawable.background_fruits,
+        description = "Background Fruits"
+    )
+    ButtonComponent(
+        modifier = Modifier.padding(bottom = 48.dp),
+        text = "Empezar",
+        style = TextStyle(
+            fontWeight = FontWeight.Bold
+        )
+    )
 
 }
 
