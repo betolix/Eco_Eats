@@ -58,10 +58,13 @@ fun ButtonComponent(
     text: String,
     style: TextStyle,
     icon: ImageVector? = null,
-    descriptionIcon: String = ""
+    descriptionIcon: String = "",
+    onClick:()->Unit
     ){
     Button(
-        onClick = { /*TODO*/ },
+        onClick = {
+            onClick()
+                  },
         modifier = modifier
     ) {
         if(icon != null){

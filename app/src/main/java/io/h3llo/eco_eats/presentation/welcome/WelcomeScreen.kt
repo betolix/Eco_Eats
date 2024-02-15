@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import io.h3llo.eco_eats.R
+import io.h3llo.eco_eats.navigation.Screen
 import io.h3llo.eco_eats.presentation.components.ButtonComponent
 import io.h3llo.eco_eats.presentation.components.ImageComponent
 import io.h3llo.eco_eats.presentation.components.SpacerComponent
@@ -32,7 +33,8 @@ import io.h3llo.eco_eats.presentation.components.TextComponent
 
 @Composable
 fun WelcomeScreen(
-    onNavigation:()->Unit
+    onClick:()->Unit
+
 ) {
     Column(modifier = Modifier
         .fillMaxSize()
@@ -54,7 +56,11 @@ fun WelcomeScreen(
             .background(Color.Gray),
             contentAlignment = Alignment.BottomCenter
             ){
-            WelcomeContent()
+            WelcomeContent(
+                onClick = {
+                    onClick()
+                }
+            )
 
 
         }
@@ -63,7 +69,10 @@ fun WelcomeScreen(
 }
 
 @Composable
-fun WelcomeContent() {
+fun WelcomeContent(
+    onClick:()->Unit
+) {
+
 
     ImageComponent(
         modifier = Modifier.fillMaxSize(),
@@ -75,7 +84,10 @@ fun WelcomeContent() {
         text = "Empezar",
         style = TextStyle(
             fontWeight = FontWeight.Bold
-        )
+        ),
+        onClick = {
+                onClick()
+        }
     )
 
 }
@@ -107,5 +119,5 @@ fun WelcomeHeader() {
 @Preview (showSystemUi = true)
 @Composable
 fun WelcomeScreenPreview() {
-    WelcomeScreen(onNavigation = {})
+    WelcomeScreen(onClick = {})
 }

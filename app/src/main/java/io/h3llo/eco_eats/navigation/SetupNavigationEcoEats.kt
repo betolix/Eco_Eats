@@ -20,9 +20,9 @@ fun SetupNavigationEcoEats(){
     ){
         composable(route = Screen.Welcome.route ){
             WelcomeScreen(
-                onNavigation = {
+                onClick = {
                     navController.popBackStack()
-                    navController.navigate(route=Screen.OnBoarding.route)
+                    navController.navigate(Screen.OnBoarding.route)
                 }
             )
         }
