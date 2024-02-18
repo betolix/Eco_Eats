@@ -40,7 +40,9 @@ import io.h3llo.eco_eats.ui.theme.SMALL_PADDING
 
 
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(
+    onClick: () -> Unit
+) {
 
     val pagerState = rememberPagerState()
 
@@ -78,7 +80,9 @@ fun OnBoardingScreen() {
                 .fillMaxWidth(),
             pagerState = pagerState,
             pages = pages,
-            onClick = {})
+            onClick = {
+                onClick()
+            })
 
     }
 }
@@ -127,6 +131,7 @@ fun OnBoardingContent(onBoardingPage: OnBoardingPage) {
 
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnBoardingFooter(pages: List<OnBoardingPage>, pagerState: PagerState) {
     repeat(pages.size){iteration ->
@@ -156,7 +161,7 @@ fun FinishButton(
 
             visible = pagerState.currentPage == pages.size-1
         ) {
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = { onClick() }) {
                 TextComponent(
                     text = "Finish",
                     style = TextStyle(
@@ -174,5 +179,5 @@ fun FinishButton(
 @Preview(showSystemUi = true)
 @Composable
 fun OnBoardingScreenPreview() {
-    OnBoardingScreen()
+    OnBoardingScreen(onClick = {})
 }
