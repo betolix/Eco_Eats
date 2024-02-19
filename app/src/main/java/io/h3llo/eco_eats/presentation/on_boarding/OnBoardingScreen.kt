@@ -32,7 +32,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import io.h3llo.eco_eats.presentation.components.ButtonComponent
 import io.h3llo.eco_eats.presentation.components.ImageComponent
 import io.h3llo.eco_eats.presentation.components.TextComponent
 import io.h3llo.eco_eats.ui.theme.EXTRA_LARGE_PADDING
