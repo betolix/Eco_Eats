@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -18,15 +19,20 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.h3llo.eco_eats.presentation.components.ImageComponent
 import io.h3llo.eco_eats.R
 import io.h3llo.eco_eats.presentation.components.ButtonComponent
+import io.h3llo.eco_eats.presentation.components.OutlinedTextFieldComponent
 import io.h3llo.eco_eats.ui.theme.ColorGeneral
 
 
@@ -81,6 +87,8 @@ fun LoginHeader() {
 @Composable
 fun LoginContent() {
 
+    val focusManager = LocalFocusManager.current
+
     Text(
         text = "Login",
         style = TextStyle(
@@ -90,55 +98,92 @@ fun LoginContent() {
         )
     )
 
-    OutlinedTextField(
+//    OutlinedTextField(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(top = 8.dp),
+//
+//        value = "",
+//        onValueChange = {  },
+//        label = {
+//            Text(
+//                text = "Correo",
+//                fontSize = 16.sp
+//            )
+//        },
+//        placeholder = {
+//            Text(
+//                text = "Ingrese su correo",
+//                fontSize = 16.sp
+//            )
+//        },
+//        shape = RoundedCornerShape(24.dp),
+//        colors = TextFieldDefaults.outlinedTextFieldColors(
+//            focusedBorderColor = ColorGeneral,
+//            unfocusedBorderColor = Color.LightGray,
+//        )
+//    )
+
+//    OutlinedTextField(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(top = 8.dp),
+//        value = "",
+//        onValueChange = {  },
+//        label = {
+//            Text(
+//                text = "Contraseña",
+//                fontSize = 16.sp
+//            )
+//        },
+//        placeholder = {
+//            Text(
+//                text = "Ingrese su contraseña",
+//                fontSize = 16.sp
+//            )
+//        },
+//        shape = RoundedCornerShape(24.dp),
+//        colors = TextFieldDefaults.outlinedTextFieldColors(
+//            focusedBorderColor = ColorGeneral,
+//            unfocusedBorderColor = Color.LightGray,
+//        )
+//    )
+
+    OutlinedTextFieldComponent(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp),
-
-        value = "",
-        onValueChange = {  },
-        label = {
-            Text(
-                text = "Correo",
-                fontSize = 16.sp
-            )
-        },
-        placeholder = {
-            Text(
-                text = "Ingrese su correo",
-                fontSize = 16.sp
-            )
-        },
-        shape = RoundedCornerShape(24.dp),
+            .padding(8.dp),
+        text = "",
+        textLabel = "Ingrese su correo",
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = ColorGeneral,
             unfocusedBorderColor = Color.LightGray,
+        ),
+        keyboardType = KeyboardType.Email,
+        imeAction = ImeAction.Next,
+        keyboardAction = KeyboardActions(
+            onNext = {
+                focusManager.moveFocus(FocusDirection.Down)
+            }
         )
     )
 
-    OutlinedTextField(
+    OutlinedTextFieldComponent(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp),
-
-        value = "",
-        onValueChange = {  },
-        label = {
-            Text(
-                text = "Contraseña",
-                fontSize = 16.sp
-            )
-        },
-        placeholder = {
-            Text(
-                text = "Ingrese su correo",
-                fontSize = 16.sp
-            )
-        },
-        shape = RoundedCornerShape(24.dp),
+            .padding(8.dp),
+        text = "",
+        textLabel = "Ingrese su contraseña",
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = ColorGeneral,
             unfocusedBorderColor = Color.LightGray,
+        ),
+        keyboardType = KeyboardType.Password,
+        imeAction = ImeAction.Done,
+        keyboardAction = KeyboardActions(
+            onDone = {
+                focusManager.clearFocus()
+            }
         )
     )
 
