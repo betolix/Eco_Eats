@@ -11,7 +11,7 @@ import retrofit2.create
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-class Api {
+object Api {
 
     //url: http://betolix-001-site1.etempurl.com/api/securities/login
     //URL BASE: http://betolix-001-sitel.etempurl.com/
