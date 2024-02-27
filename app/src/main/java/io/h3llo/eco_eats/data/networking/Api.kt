@@ -7,7 +7,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -26,7 +25,7 @@ object Api {
 
     // RETORFIT CONFIGURATION
     private val builder = Retrofit.Builder()
-        .baseUrl("http://betolix=001-site1.etempurl.com/")
+        .baseUrl("http://betolix-001-site1.etempurl.com/")
         .client(clientBuilder.build())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
@@ -34,7 +33,7 @@ object Api {
     interface HealthyEndpoint{
 
         @POST("api/securities/login")
-        fun signIn(@Body request:LoginRequest ): Response<LoginResponseDTO>
+        suspend fun signIn(@Body request:LoginRequest ): Response<LoginResponseDTO>
 
     }
 
