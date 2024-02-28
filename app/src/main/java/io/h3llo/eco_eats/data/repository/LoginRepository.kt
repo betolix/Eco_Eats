@@ -6,6 +6,7 @@ import io.h3llo.eco_eats.data.model.UserDTO
 import io.h3llo.eco_eats.data.networking.Api
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.io.IOException
 import java.lang.Exception
 
 class LoginRepository {
@@ -29,9 +30,12 @@ class LoginRepository {
             }else{
                 // USUARIO NO EXISTE
                 emit(Result.Error(message = response.body()!!.message))
-
             }
-        }catch(ex:Exception){
+        }
+        catch (ex:IOException){
+            emit(Result.Error(message = "Verifique su conexion a internet"))
+        }
+        catch(ex:Exception){
             emit(Result.Error(message = ex.message.toString()))
         }
 

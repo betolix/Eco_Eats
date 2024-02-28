@@ -10,7 +10,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.icons.Icons
+
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -27,6 +33,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -97,11 +105,15 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState) {
     val focusManager = LocalFocusManager.current
 
     var email by remember {
-        mutableStateOf("")
+        mutableStateOf("jledesma2509@gmail.com")
     }
 
     var password by remember {
-        mutableStateOf("")
+        mutableStateOf("123")
+    }
+
+    var visualTransformation by remember {
+        mutableStateOf(false)
     }
 
     Text(
@@ -112,6 +124,109 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState) {
             fontWeight = FontWeight.Bold
         )
     )
+
+    OutlinedTextFieldComponent(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        text = email,
+        textLabel = "Ingrese su correo",
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = ColorGeneral,
+            unfocusedBorderColor = Color.LightGray,
+        ),
+        keyboardType = KeyboardType.Email,
+        imeAction = ImeAction.Next,
+        keyboardAction = KeyboardActions(
+            onNext = {
+                focusManager.moveFocus(FocusDirection.Down)
+            }
+        ),
+        onValueChange = {
+             email = it
+        }
+    )
+
+    OutlinedTextFieldComponent(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        text = password,
+        textLabel = "Ingrese su contraseña",
+        visualTransformation = if (visualTransformation)PasswordVisualTransformation() else VisualTransformation.None,
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = ColorGeneral,
+            unfocusedBorderColor = Color.LightGray,
+        ),
+        keyboardType = KeyboardType.Password,
+        imeAction = ImeAction.Done,
+        keyboardAction = KeyboardActions(
+            onDone = {
+                focusManager.clearFocus()
+            }
+        ),
+        onValueChange = {
+            password = it
+        },
+        trailingIcon = {
+            IconButton(onClick = { visualTransformation = !visualTransformation }) {
+                Icon(
+                    imageVector = if(visualTransformation)
+                        Icons.Filled.Visibility
+                    else
+                        Icons.Filled.VisibilityOff,
+                    contentDescription = "Visibility"
+                )
+            }
+
+        }
+    )
+
+    if(state.isLoading){
+        androidx.compose.material3.CircularProgressIndicator()
+    }
+
+    if(state.successful != null ){
+        Text(text = "${state.successful?.email}")
+    }
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomEnd
+    ){
+        ButtonComponent(
+            modifier = Modifier
+                .fillMaxWidth(),
+                //.height(52.dp),
+            text = "Ingresar",
+            style = TextStyle(
+                fontSize = 16.sp
+            ),
+            onClick = {
+                      viewModel.signIn( email, password)
+            },
+            containerColor = ColorGeneral,
+        )
+    }
+
+}
+
+@Composable
+fun LoginFooter() {
+
+}
+
+
+
+@Preview(showSystemUi = true)
+@Composable
+fun LoginScreenPreview() {
+    LoginScreen()
+}
+
+
+
+
 
 //    OutlinedTextField(
 //        modifier = Modifier
@@ -163,83 +278,3 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState) {
 //            unfocusedBorderColor = Color.LightGray,
 //        )
 //    )
-
-    OutlinedTextFieldComponent(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        text = "",
-        textLabel = "Ingrese su correo",
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = ColorGeneral,
-            unfocusedBorderColor = Color.LightGray,
-        ),
-        keyboardType = KeyboardType.Email,
-        imeAction = ImeAction.Next,
-        keyboardAction = KeyboardActions(
-            onNext = {
-                focusManager.moveFocus(FocusDirection.Down)
-            }
-        )
-    )
-
-    OutlinedTextFieldComponent(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        text = "",
-        textLabel = "Ingrese su contraseña",
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = ColorGeneral,
-            unfocusedBorderColor = Color.LightGray,
-        ),
-        keyboardType = KeyboardType.Password,
-        imeAction = ImeAction.Done,
-        keyboardAction = KeyboardActions(
-            onDone = {
-                focusManager.clearFocus()
-            }
-        )
-    )
-
-    if(state.isLoading){
-        androidx.compose.material3.CircularProgressIndicator()
-    }
-
-    if(state.successful != null ){
-        Text(text = "${state.successful?.email}")
-    }
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomEnd
-    ){
-        ButtonComponent(
-            modifier = Modifier
-                .fillMaxWidth(),
-                //.height(52.dp),
-            text = "Ingresar",
-            style = TextStyle(
-                fontSize = 16.sp
-            ),
-            onClick = {
-                      viewModel.signIn( "","")
-            },
-            containerColor = ColorGeneral,
-        )
-    }
-
-}
-
-@Composable
-fun LoginFooter() {
-
-}
-
-
-
-@Preview(showSystemUi = true)
-@Composable
-fun LoginScreenPreview() {
-    LoginScreen()
-}

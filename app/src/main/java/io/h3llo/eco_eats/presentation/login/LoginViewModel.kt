@@ -25,7 +25,7 @@ class LoginViewModel : ViewModel(){
         viewModelScope.launch(Dispatchers.Main) {
 
 
-            repository.logIn("jledesma2509@gmail.com", "123").onEach {result ->
+            repository.logIn(email, password).onEach {result ->
 
                 when(result){
                     is Result.Error -> {

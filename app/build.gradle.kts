@@ -94,4 +94,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.42")
     kapt("com.google.dagger:hilt-android-compiler:2.42")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
+
+    // Icons
+    implementation("androidx.compose.material:material-icons-extended-android:1.6.2")
+
 }
