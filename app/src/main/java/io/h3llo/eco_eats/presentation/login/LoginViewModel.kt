@@ -17,6 +17,7 @@ import kotlinx.coroutines.withContext
 class LoginViewModel : ViewModel(){
 
     var state by mutableStateOf(LoginState())
+    private set
 
     fun signIn(email:String, password:String){
 
@@ -41,14 +42,13 @@ class LoginViewModel : ViewModel(){
                     }
                 }
             }.launchIn(viewModelScope)
-//            withContext(Dispatchers.IO){
-//
-//            }
 
 
         }
 
+    }
 
-
+    fun resetData() {
+        state = state.copy(successful = null, error = null )
     }
 }

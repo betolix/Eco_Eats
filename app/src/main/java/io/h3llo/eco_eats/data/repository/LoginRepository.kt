@@ -3,7 +3,9 @@ package io.h3llo.eco_eats.data.repository
 import io.h3llo.eco_eats.core.Result
 import io.h3llo.eco_eats.data.model.LoginRequest
 import io.h3llo.eco_eats.data.model.UserDTO
+import io.h3llo.eco_eats.data.model.toUser
 import io.h3llo.eco_eats.data.networking.Api
+import io.h3llo.eco_eats.domain.model.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
@@ -11,7 +13,7 @@ import java.lang.Exception
 
 class LoginRepository {
 
-    fun logIn( email:String, password:String) : Flow<Result<UserDTO>> = flow {
+    fun logIn( email:String, password:String) : Flow<Result<User>> = flow {
 
         try {
 
@@ -25,7 +27,7 @@ class LoginRepository {
             )
             if(response.body()?.success == true ){
                 // USUARIO EXISTE
-                emit(Result.Success(data = response.body()?.data))
+                emit(Result.Success(data = response.body()?.data?.toUser()))
 
             }else{
                 // USUARIO NO EXISTE

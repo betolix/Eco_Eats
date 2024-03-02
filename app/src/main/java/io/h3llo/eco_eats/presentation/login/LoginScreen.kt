@@ -1,6 +1,9 @@
 package io.h3llo.eco_eats.presentation.login
 
 
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
+import android.widget.Toast.LENGTH_SHORT
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +23,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -116,6 +121,8 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState) {
         mutableStateOf(false)
     }
 
+    val context = LocalContext.current
+
     Text(
         text = "Login",
         style = TextStyle(
@@ -182,13 +189,24 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState) {
         }
     )
 
+    // succes or error
+    LaunchedEffect(key1 = state.successful, key2 = state.error ){
+        if(state.successful != null ){
+            Toast.makeText(context, "Bienvenido ${state.successful?.email}", LENGTH_SHORT).show()
+            //Text(text = "Bienvenido ${state.successful?.email}")
+        }
+        if(state.error != null){
+            Toast.makeText(context, "Error: ${state.error}", LENGTH_SHORT).show()
+        }
+        viewModel.resetData()
+    }
+
     if(state.isLoading){
         androidx.compose.material3.CircularProgressIndicator()
     }
 
-    if(state.successful != null ){
-        Text(text = "${state.successful?.email}")
-    }
+
+
 
     Box(
         modifier = Modifier.fillMaxSize(),
