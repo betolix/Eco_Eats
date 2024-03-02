@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -151,6 +152,16 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState) {
         ),
         onValueChange = {
              email = it
+        },
+        trailingIcon = {
+            if (email.isNotEmpty()){
+                IconButton(onClick = { email = "" }) {
+                    Icon(
+                        imageVector = Icons.Filled.Clear,
+                        contentDescription = "Clear"
+                    )
+                }
+            }
         }
     )
 
