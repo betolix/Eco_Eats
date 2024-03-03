@@ -17,7 +17,8 @@ fun SetupNavigationEcoEats(){
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Welcome.route
+        // startDestination = Screen.Welcome.route
+        startDestination = Screen.Login.route
     ){
         composable(route = Screen.Welcome.route ){
             WelcomeScreen(
