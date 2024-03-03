@@ -54,7 +54,8 @@ import io.h3llo.eco_eats.ui.theme.ColorGeneral
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel(),
+    onNavigateHome:()->Unit
 ) {
 
     val state = viewModel.state
@@ -80,7 +81,9 @@ fun LoginScreen(
                 .padding(start = 24.dp, end = 24.dp, top = 24.dp),
 
         ) {
-            LoginContent(viewModel, state)
+            LoginContent(viewModel, state, onNavigateHome = {
+                onNavigateHome()
+            })
 
         }
         Column(
@@ -106,7 +109,7 @@ fun LoginHeader() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginContent(viewModel: LoginViewModel, state: LoginState) {
+fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome:()->Unit) {
 
     val focusManager = LocalFocusManager.current
 
@@ -205,6 +208,7 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState) {
         if(state.successful != null ){
             Toast.makeText(context, "Bienvenido ${state.successful?.email}", LENGTH_SHORT).show()
             //Text(text = "Bienvenido ${state.successful?.email}")
+            onNavigateHome()
         }
         if(state.error != null){
             Toast.makeText(context, "Error: ${state.error}", LENGTH_SHORT).show()
@@ -250,7 +254,7 @@ fun LoginFooter() {
 @Preview(showSystemUi = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(onNavigateHome = {})
 }
 
 
