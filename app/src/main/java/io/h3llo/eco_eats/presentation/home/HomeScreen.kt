@@ -31,6 +31,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import io.h3llo.eco_eats.navigation.HomeScreen
+import io.h3llo.eco_eats.navigation.SetupNavigationHomeEcoEats
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +46,7 @@ fun HomeScreen() {
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
             hasNews = false,
-            route = ""
+            route = HomeScreen.Dish.route
         )
         ,
         BottomNavigationItem(
@@ -52,20 +55,22 @@ fun HomeScreen() {
             unselectedIcon = Icons.Outlined.Search,
             hasNews = false,
             badgeCount = 4,
-            route = ""
+            route = HomeScreen.Search.route
         )
         ,BottomNavigationItem(
             title = "Settings",
             selectedIcon = Icons.Filled.Settings,
             unselectedIcon = Icons.Outlined.Settings,
             hasNews = true,
-            route = ""
+            route = HomeScreen.Setting.route
         )
     )
 
     var selectedItemIndex by remember {
         mutableStateOf(0)
     }
+
+    val navController = rememberNavController()
 
     Scaffold (
         modifier = Modifier.fillMaxSize(),
@@ -76,6 +81,7 @@ fun HomeScreen() {
                         selected = selectedItemIndex == index,
                         onClick = {
                             selectedItemIndex = index
+                            navController.navigate(item.route)
                         },
                         icon = {
 
@@ -128,13 +134,8 @@ fun HomeScreen() {
             )
         }
     ) {paddingValues ->
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(paddingValues),
-            contentAlignment = Alignment.Center,
-        ){
-            Text(text = "Home")
-        }
+
+        SetupNavigationHomeEcoEats(navHostController = navController )
 
     }
     
