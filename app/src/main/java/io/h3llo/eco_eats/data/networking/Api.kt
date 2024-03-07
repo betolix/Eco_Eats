@@ -1,5 +1,6 @@
 package io.h3llo.eco_eats.data.networking
 
+import io.h3llo.eco_eats.data.model.DishResponseDTO
 import io.h3llo.eco_eats.data.model.LoginRequest
 import io.h3llo.eco_eats.data.model.LoginResponseDTO
 import okhttp3.OkHttpClient
@@ -8,6 +9,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 object Api {
@@ -34,6 +37,10 @@ object Api {
 
         @POST("api/securities/login")
         suspend fun signIn(@Body request:LoginRequest ): Response<LoginResponseDTO>
+
+        @GET("api/dish")
+        suspend fun getDishes(@Header("Authorization") authorization:String
+        ) : Response<DishResponseDTO>
 
     }
 

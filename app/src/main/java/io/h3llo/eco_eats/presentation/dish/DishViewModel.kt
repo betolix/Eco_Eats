@@ -1,54 +1,47 @@
-package io.h3llo.eco_eats.presentation.login
+package io.h3llo.eco_eats.presentation.dish
 
-
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.h3llo.eco_eats.core.Result
-import io.h3llo.eco_eats.data.repository.LoginRepository
-import kotlinx.coroutines.Dispatchers
+import io.h3llo.eco_eats.data.repository.DishRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
+class DishViewModel : ViewModel() {
 
-class LoginViewModel : ViewModel(){
+    var state by mutableStateOf(DishState())
+        private set
 
-    var state by mutableStateOf(LoginState())
-    private set
+    fun getDishes() {
 
-    fun signIn(email:String, password:String){
-
-        val repository = LoginRepository()
-
-        viewModelScope.launch(Dispatchers.Main) {
+        val repository = DishRepository()
 
 
-            repository.logIn(email, password).onEach {result ->
+        viewModelScope.launch {
 
+            repository.dishes().onEach{result ->
                 when(result){
                     is Result.Error -> {
-                        state = state.copy(error = result.message, isLoading = false )
-
+                        state = state.copy(isLoading = false, error = result.message)
                     }
                     is Result.Loading -> {
                         state = state.copy(isLoading = true)
                     }
                     is Result.Success -> {
-                        state = state.copy(successful = result.data, isLoading = false )
+                        state = state.copy(isLoading = false, dishes = result.data )
 
                     }
                 }
             }.launchIn(viewModelScope)
 
-
         }
 
     }
 
-    fun resetData() {
-        state = state.copy(successful = null, error = null )
-    }
+
 }
