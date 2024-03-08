@@ -135,7 +135,7 @@ fun HomeScreen() {
         }
     ) {paddingValues ->
 
-        SetupNavigationHomeEcoEats(navHostController = navController )
+        SetupNavigationHomeEcoEats(navHostController = navController, paddingValues = paddingValues )
 
     }
     

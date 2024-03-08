@@ -1,5 +1,6 @@
 package io.h3llo.eco_eats.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -10,7 +11,7 @@ import io.h3llo.eco_eats.presentation.search.SearchScreen
 import io.h3llo.eco_eats.presentation.settings.SettingScreen
 
 @Composable
-fun SetupNavigationHomeEcoEats(navHostController: NavHostController) {
+fun SetupNavigationHomeEcoEats(navHostController: NavHostController, paddingValues: PaddingValues) {
 
     NavHost(
         navController = navHostController,
@@ -18,7 +19,7 @@ fun SetupNavigationHomeEcoEats(navHostController: NavHostController) {
     ) {
 
         composable(route = HomeScreen.Dish.route){
-            DishScreen()
+            DishScreen(paddingValues = paddingValues)
         }
         composable(route = HomeScreen.Search.route){
             SearchScreen()
