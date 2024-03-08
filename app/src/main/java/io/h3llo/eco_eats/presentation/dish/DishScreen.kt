@@ -155,7 +155,7 @@ fun DishItem(
                 )
             )
             SpacerComponent(modifier = Modifier.height(2.dp))
-
+            RatingBar(currenRating = dish.rating.toInt())
 
         }
 
@@ -163,3 +163,22 @@ fun DishItem(
 }
 
 
+@Composable
+fun RatingBar(
+    maxRating: Int = 5,
+    currenRating: Int,
+    starsColor: Color = Color.Yellow
+) {
+    Row {
+        for (i in 1..maxRating) {
+            Icon(
+                imageVector = if (i < currenRating) Icons.Filled.Star else Icons.Outlined.Star,
+                contentDescription = "Stars",
+                tint = if (i <= currenRating) starsColor
+                else Color.Unspecified,
+                modifier = Modifier
+                    .padding(2.dp)
+            )
+        }
+    }
+}
