@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Star
@@ -25,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -36,12 +38,17 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 import io.h3llo.eco_eats.domain.model.Dish
+import io.h3llo.eco_eats.presentation.components.DishItem
 import io.h3llo.eco_eats.presentation.components.SpacerComponent
 import io.h3llo.eco_eats.presentation.components.TextComponent
 import io.h3llo.eco_eats.ui.theme.ColorGeneral
 
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun DishScreen(
     paddingValues: PaddingValues,
@@ -49,6 +56,7 @@ fun DishScreen(
 ) {
 
     val state = viewModel.state
+    val pagerState = rememberPagerState()
 
     Box(
         modifier = Modifier
@@ -61,124 +69,92 @@ fun DishScreen(
             viewModel.getDishes()
         }
 
-        //Text(text = "Alohaaaaaaa")
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            state.dishes?.let { dishes ->
-                items(dishes) {
-                    // Text(text = it.name)
-                    DishItem(dish = it)
+        Column {
 
+            TextComponent(
+                text = "¿Qué hay de nuevo?",
+                style = TextStyle(
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, start = 8.dp)
+            )
+
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+            ){
+                state.dishes?.let{ dishes->
+                    val dishesFlag = dishes.filter {
+                        it.flagHeader
+                    }
+
+                    HorizontalPager(
+                        count = dishesFlag.size,
+                        state = pagerState,
+                        verticalAlignment = Alignment.Top
+                    ) {position ->
+                        PagerDishHeaderComponent(dishesFlag[position])
+
+                    }
 
                 }
             }
-        }
 
-    }
-}
-
-@Composable
-fun DishItem(
-    modifier: Modifier = Modifier,
-    dish: Dish
-) {
-    Card(
-        border = BorderStroke(
-            width = 2.dp,
-            color = ColorGeneral
-        ), modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-
-            }
-    ) {
-        Column(
-            modifier = Modifier.padding(8.dp)
-
-        ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(dish.image)
-                    .crossfade(2000)
-                    .build(),
-                contentDescription = dish.name,
+            TextComponent(
+                text = "Carta del dia",
+                style = TextStyle(
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight(),
-                contentScale = ContentScale.Crop
+                    .padding(top = 16.dp, start = 8.dp)
             )
-            SpacerComponent(modifier = Modifier.height(12.dp))
-            TextComponent(
-                text = dish.name,
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            )
-            SpacerComponent(modifier = Modifier.height(8.dp))
-            TextComponent(
-                text = "Carbohidratos",
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal
-                )
-            )
-            SpacerComponent(modifier = Modifier.height(2.dp))
-            TextComponent(
-                text = dish.carbohydrates.toString(),
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = ColorGeneral
-                )
-            )
-
-            SpacerComponent(modifier = Modifier.height(2.dp))
-            TextComponent(
-                text = "Precio",
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal
-                )
-            )
-            SpacerComponent(modifier = Modifier.height(2.dp))
-            TextComponent(
-                text = "$ ${dish.price}",
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = ColorGeneral
-                )
-            )
-            SpacerComponent(modifier = Modifier.height(2.dp))
-            RatingBar(currenRating = dish.rating.toInt())
+            
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                state.dishes?.let { dishes ->
+                    items(dishes) {
+                        // Text(text = it.name)
+                        DishItem(dish = it)
+                    }
+                }
+            }
 
         }
 
     }
 }
-
 
 @Composable
-fun RatingBar(
-    maxRating: Int = 5,
-    currenRating: Int,
-    starsColor: Color = Color.Yellow
-) {
-    Row {
-        for (i in 1..maxRating) {
-            Icon(
-                imageVector = if (i < currenRating) Icons.Filled.Star else Icons.Outlined.Star,
-                contentDescription = "Stars",
-                tint = if (i <= currenRating) starsColor
-                else Color.Unspecified,
-                modifier = Modifier
-                    .padding(2.dp)
-            )
-        }
+fun PagerDishHeaderComponent(dish: Dish) {
+    
+    Box(modifier = Modifier
+        .fillMaxWidth(),
+        contentAlignment = Alignment.TopCenter
+    )
+    {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(dish.thumbails)
+                .crossfade(1000)
+                .build(),
+            contentDescription = dish.name,
+            modifier =  Modifier
+                .fillMaxWidth()
+                .height(150.dp)
+                .clip(RoundedCornerShape(16.dp)),
+            contentScale = ContentScale.Crop
+        )
+
     }
+
 }
+
