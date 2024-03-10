@@ -47,6 +47,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import io.h3llo.eco_eats.domain.model.Dish
 import io.h3llo.eco_eats.presentation.components.DishItem
+import io.h3llo.eco_eats.presentation.components.PagerDishHeaderComponent
 import io.h3llo.eco_eats.presentation.components.SpacerComponent
 import io.h3llo.eco_eats.presentation.components.TextComponent
 import io.h3llo.eco_eats.ui.theme.ColorGeneral
@@ -151,58 +152,5 @@ fun DishScreen(
         }
 
     }
-}
-
-@Composable
-fun PagerDishHeaderComponent(dish: Dish) {
-    
-    Box(modifier = Modifier
-        .fillMaxWidth(),
-        contentAlignment = Alignment.TopCenter
-    )
-    {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(dish.thumbails)
-                .crossfade(1000)
-                .build(),
-            contentDescription = dish.name,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(150.dp)
-                .clip(RoundedCornerShape(16.dp)),
-            contentScale = ContentScale.Crop
-        )
-        
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .padding(top = 16.dp)
-        )
-        {
-            TextComponent(
-                text = dish.name,
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-            )
-
-            SpacerComponent(modifier = Modifier.height(16.dp))
-
-            TextComponent(
-                text = dish.description,
-                style = TextStyle(
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = Color.White
-                )
-            )
-        }
-
-    }
-
 }
 

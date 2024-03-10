@@ -5,6 +5,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +28,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -255,3 +258,57 @@ fun RatingBar(
         }
     }
 }
+
+@Composable
+fun PagerDishHeaderComponent(dish: Dish) {
+
+    Box(modifier = Modifier
+        .fillMaxWidth(),
+        contentAlignment = Alignment.TopCenter
+    )
+    {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(dish.thumbails)
+                .crossfade(1000)
+                .build(),
+            contentDescription = dish.name,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp)
+                .clip(RoundedCornerShape(16.dp)),
+            contentScale = ContentScale.Crop
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .padding(top = 16.dp)
+        )
+        {
+            TextComponent(
+                text = dish.name,
+                style = TextStyle(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+            )
+
+            SpacerComponent(modifier = Modifier.height(16.dp))
+
+            TextComponent(
+                text = dish.description,
+                style = TextStyle(
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.White
+                )
+            )
+        }
+
+    }
+
+}
+
