@@ -17,7 +17,7 @@ class DishRepository {
         try {
             emit(Result.Loading())
 
-            val response = Api.build().getDishes("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwianRpIjoiOTY0MTA1NjQtZDY3ZS00ODlhLTlhNmQtNmY3NmYyZGJmNTg2IiwiaWF0IjoiMy85LzIwMjQgOTowNTowMiBQTSIsImV4cCI6MTcxMDAyMTkwMiwiaXNzIjoiSk9UQURFViIsImF1ZCI6IkpPVEFERVYifQ.j-eIEb2eMlgk8lU_JvarMqZHdefRLmJOfrA24sZ5PwQ")
+            val response = Api.build().getDishes("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwianRpIjoiNTI5ZmJlMDctYWFjZi00ZDZiLWFmOWItZThhOTVmNTNiNWM0IiwiaWF0IjoiMy8xMC8yMDI0IDI6MTg6NTkgQU0iLCJleHAiOjE3MTAwNDA3MzksImlzcyI6IkpPVEFERVYiLCJhdWQiOiJKT1RBREVWIn0.RBoce-EiswXX5tSdG_GYRsQJGDapsRtbdiwUHyAkFNw")
             if(response.code() == 200){
 
                 if(response.body()?.success == true ){

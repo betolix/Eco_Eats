@@ -1,20 +1,24 @@
 package io.h3llo.eco_eats.presentation.dish
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -84,7 +88,8 @@ fun DishScreen(
 
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(8.dp),
+                contentAlignment = Alignment.BottomCenter
             ){
                 state.dishes?.let{ dishes->
                     val dishesFlag = dishes.filter {
@@ -98,6 +103,21 @@ fun DishScreen(
                     ) {position ->
                         PagerDishHeaderComponent(dishesFlag[position])
 
+                    }
+                    Row(
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy (8.dp)
+                    ) {
+                        repeat(dishesFlag.size){iteration ->
+                            val color = if(pagerState.currentPage == iteration) Color.White else Color.Gray
+                            Box (
+                                modifier = Modifier
+                                    .padding(2.dp)
+                                    .clip(CircleShape)
+                                    .background(color)
+                                    .size(12.dp)
+                            )
+                        }
                     }
 
                 }
@@ -118,7 +138,7 @@ fun DishScreen(
                 columns = GridCells.Fixed(2),
                 contentPadding = PaddingValues(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 state.dishes?.let { dishes ->
                     items(dishes) {
@@ -147,12 +167,40 @@ fun PagerDishHeaderComponent(dish: Dish) {
                 .crossfade(1000)
                 .build(),
             contentDescription = dish.name,
-            modifier =  Modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(150.dp)
                 .clip(RoundedCornerShape(16.dp)),
             contentScale = ContentScale.Crop
         )
+        
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .padding(top = 16.dp)
+        )
+        {
+            TextComponent(
+                text = dish.name,
+                style = TextStyle(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+            )
+
+            SpacerComponent(modifier = Modifier.height(16.dp))
+
+            TextComponent(
+                text = dish.description,
+                style = TextStyle(
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.White
+                )
+            )
+        }
 
     }
 
