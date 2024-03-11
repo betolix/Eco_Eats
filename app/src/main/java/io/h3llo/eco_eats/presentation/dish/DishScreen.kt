@@ -57,7 +57,8 @@ import io.h3llo.eco_eats.ui.theme.ColorGeneral
 @Composable
 fun DishScreen(
     paddingValues: PaddingValues,
-    viewModel: DishViewModel = hiltViewModel()
+    viewModel: DishViewModel = hiltViewModel(),
+    onNavigation:(Dish)->Unit
 ) {
 
     val state = viewModel.state
@@ -102,7 +103,12 @@ fun DishScreen(
                         state = pagerState,
                         verticalAlignment = Alignment.Top
                     ) {position ->
-                        PagerDishHeaderComponent(dishesFlag[position])
+                        PagerDishHeaderComponent(
+                            dishesFlag[position],
+                            onClick = {
+                                onNavigation(it)
+                            }
+                        )
 
                     }
                     Row(
@@ -144,7 +150,9 @@ fun DishScreen(
                 state.dishes?.let { dishes ->
                     items(dishes) {
                         // Text(text = it.name)
-                        DishItem(dish = it)
+                        DishItem(dish = it){
+                            onNavigation(it)
+                        }
                     }
                 }
             }

@@ -160,7 +160,8 @@ fun OutlinedTextFieldComponent(
 @Composable
 fun DishItem(
     modifier: Modifier = Modifier,
-    dish: Dish
+    dish: Dish,
+    onClick:(Dish)->Unit
 ) {
     Card(
         border = BorderStroke(
@@ -169,7 +170,7 @@ fun DishItem(
         ), modifier = Modifier
             .fillMaxWidth()
             .clickable {
-
+                onClick(dish)
             }
     ) {
         Column(
@@ -260,10 +261,17 @@ fun RatingBar(
 }
 
 @Composable
-fun PagerDishHeaderComponent(dish: Dish) {
+fun PagerDishHeaderComponent(
+    dish: Dish,
+    onClick: (Dish) -> Unit
+) {
 
-    Box(modifier = Modifier
-        .fillMaxWidth(),
+    Box(
+        modifier = Modifier
+        .fillMaxWidth()
+        .clickable {
+            onClick(dish)
+            },
         contentAlignment = Alignment.TopCenter
     )
     {

@@ -1,6 +1,7 @@
 package io.h3llo.eco_eats.domain.model
 
 import io.h3llo.eco_eats.data.model.DishDTO
+import java.io.Serializable
 
 data class Dish(
     val id: Int,
@@ -14,7 +15,7 @@ data class Dish(
     val rating: Double,
     val ingredients: String,
     val flagHeader: Boolean
-)
+):Serializable
 
 //List<DishDTO> → List<Dish>
 
