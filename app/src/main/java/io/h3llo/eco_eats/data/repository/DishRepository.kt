@@ -1,5 +1,6 @@
 package io.h3llo.eco_eats.data.repository
 
+import android.content.SharedPreferences
 import io.h3llo.eco_eats.core.Result
 import io.h3llo.eco_eats.data.networking.Api
 import io.h3llo.eco_eats.domain.model.Dish
@@ -8,8 +9,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import java.lang.Exception
+import javax.inject.Inject
 
-class DishRepository {
+class DishRepository @Inject constructor(val sharedPreferences: SharedPreferences)  {
 
     suspend fun dishes() : Flow <Result<List<Dish>>> = flow {
 
@@ -17,7 +19,10 @@ class DishRepository {
         try {
             emit(Result.Loading())
 
-            val response = Api.build().getDishes("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwianRpIjoiODc2NzQzNWMtMGJlYi00M2ZiLWJhYTItMGNiZDgzM2M1OGY4IiwiaWF0IjoiMy8xMS8yMDI0IDQ6NDE6MTggQU0iLCJleHAiOjE3MTAxMzU2NzgsImlzcyI6IkpPVEFERVYiLCJhdWQiOiJKT1RBREVWIn0.zsgpy6-jLf48tTgv_h_sA5lnuY7z-hYQRcracV9A43E")
+            val token = sharedPreferences.getString("TOKEN","")
+
+            val response = Api.build().getDishes("Bearer $token")
+//          val response = Api.build().getDishes("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwianRpIjoiYjY2ZWI1MzYtMjYzNS00NTZmLTgzMzktMzg2MTNlNGUxOTBiIiwiaWF0IjoiMy8xOS8yMDI0IDI6NDc6MDcgUE0iLCJleHAiOjE3MTA4NjMyMjcsImlzcyI6IkpPVEFERVYiLCJhdWQiOiJKT1RBREVWIn0.0BtFGdCSrJJYEJk2_AaIpOkkW5g6h6K8PC0n6gAkaYQ")
             if(response.code() == 200){
 
                 if(response.body()?.success == true ){

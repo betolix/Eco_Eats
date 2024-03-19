@@ -1,5 +1,6 @@
 package io.h3llo.eco_eats.data.repository
 
+import android.content.SharedPreferences
 import io.h3llo.eco_eats.core.Result
 import io.h3llo.eco_eats.data.model.LoginRequest
 import io.h3llo.eco_eats.data.model.UserDTO
@@ -10,8 +11,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import java.lang.Exception
+import javax.inject.Inject
 
-class LoginRepository {
+class LoginRepository @Inject constructor(val sharedPreferences: SharedPreferences) {
 
     fun logIn( email:String, password:String) : Flow<Result<User>> = flow {
 
@@ -26,7 +28,8 @@ class LoginRepository {
                 )
             )
             if(response.body()?.success == true ){
-                // USUARIO EXISTE
+                // USUARIO EXISTE // SAVE TOKEN TO INJECTED SHARED PREFERENCES
+                sharedPreferences.edit().putString("TOKEN", response.body()?.data?.token).apply()
                 emit(Result.Success(data = response.body()?.data?.toUser()))
 
             }else{

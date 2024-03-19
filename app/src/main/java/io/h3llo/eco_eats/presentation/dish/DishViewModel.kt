@@ -6,20 +6,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.h3llo.eco_eats.core.Result
 import io.h3llo.eco_eats.data.repository.DishRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DishViewModel : ViewModel() {
+@HiltViewModel
+class DishViewModel @Inject constructor(val repository: DishRepository): ViewModel() {
 
     var state by mutableStateOf(DishState())
         private set
 
     fun getDishes() {
 
-        val repository = DishRepository()
+        //val repository = DishRepository()
 
 
         viewModelScope.launch {

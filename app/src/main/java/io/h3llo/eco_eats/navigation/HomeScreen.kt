@@ -7,7 +7,6 @@ sealed class HomeScreen (val route:String) {
     object Setting: HomeScreen(route ="setting_screen")
 
     object Detail: HomeScreen(route = "detail_screen/?dishJson={dishJson}"){
-
         fun createRoute(dishJson:String) = "detail_screen/?dishJson=$dishJson"
 
     }

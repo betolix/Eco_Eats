@@ -42,5 +42,5 @@ fun SetupNavigationHomeEcoEats(navHostController: NavHostController, paddingValu
             DishDetailScreen(dish = dish)
         }
     }
-    
+
 }

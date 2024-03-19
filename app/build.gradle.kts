@@ -61,6 +61,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    // CircularProgressIndicator bug
+    // implementation ("androidx.compose.material3:material3-android:1.2.0-rc01")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -91,11 +94,14 @@ dependencies {
 
     //HILT - DI
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
-    implementation("com.google.dagger:hilt-android:2.42")
-    kapt("com.google.dagger:hilt-android-compiler:2.42")
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
     // Icons
     implementation("androidx.compose.material:material-icons-extended-android:1.6.2")
+
+    // SECURITY CRYPTO
+    implementation("androidx.security:security-crypto:1.0.0-alpha02")
 
 }
