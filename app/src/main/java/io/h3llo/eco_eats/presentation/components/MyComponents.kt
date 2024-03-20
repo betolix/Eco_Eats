@@ -233,7 +233,7 @@ fun DishItem(
                 contentDescription = dish.name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight(),
+                    .height(100.dp),
                 contentScale = ContentScale.Crop
             )
             SpacerComponent(modifier = Modifier.height(12.dp))
