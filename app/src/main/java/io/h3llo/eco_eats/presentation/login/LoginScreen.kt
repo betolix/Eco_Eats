@@ -220,7 +220,7 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome: (
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            androidx.compose.material3.CircularProgressIndicator()
+            androidx.compose.material3.CircularProgressIndicator(color = ColorGeneral)
         }
 
     }
