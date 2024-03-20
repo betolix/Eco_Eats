@@ -53,15 +53,16 @@ import io.h3llo.eco_eats.ui.theme.ColorGeneral
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
-    onNavigateHome:()->Unit
+    onNavigateHome: () -> Unit
 ) {
 
     val state = viewModel.state
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.White)
-    ){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -78,7 +79,7 @@ fun LoginScreen(
                 .weight(3f)
                 .padding(start = 24.dp, end = 24.dp, top = 24.dp),
 
-        ) {
+            ) {
             LoginContent(viewModel, state, onNavigateHome = {
                 onNavigateHome()
             })
@@ -88,7 +89,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                //.background(Color(0, 255, 0, 200))
+            //.background(Color(0, 255, 0, 200))
         ) {
             LoginFooter()
 
@@ -107,7 +108,7 @@ fun LoginHeader() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome:()->Unit) {
+fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome: () -> Unit) {
 
     val focusManager = LocalFocusManager.current
 
@@ -152,10 +153,10 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome:()
             }
         ),
         onValueChange = {
-             email = it
+            email = it
         },
         trailingIcon = {
-            if (email.isNotEmpty()){
+            if (email.isNotEmpty()) {
                 IconButton(onClick = { email = "" }) {
                     Icon(
                         imageVector = Icons.Filled.Clear,
@@ -172,7 +173,7 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome:()
             .padding(8.dp),
         text = password,
         textLabel = "Ingrese su contraseña",
-        visualTransformation = if (visualTransformation)PasswordVisualTransformation() else VisualTransformation.None,
+        visualTransformation = if (visualTransformation) PasswordVisualTransformation() else VisualTransformation.None,
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = ColorGeneral,
             unfocusedBorderColor = Color.LightGray,
@@ -190,7 +191,7 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome:()
         trailingIcon = {
             IconButton(onClick = { visualTransformation = !visualTransformation }) {
                 Icon(
-                    imageVector = if(visualTransformation)
+                    imageVector = if (visualTransformation)
                         Icons.Filled.Visibility
                     else
                         Icons.Filled.VisibilityOff,
@@ -202,20 +203,26 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome:()
     )
 
     // succes or error
-    LaunchedEffect(key1 = state.successful, key2 = state.error ){
-        if(state.successful != null ){
+    LaunchedEffect(key1 = state.successful, key2 = state.error) {
+        if (state.successful != null) {
             Toast.makeText(context, "Bienvenido ${state.successful?.email}", LENGTH_SHORT).show()
             //Text(text = "Bienvenido ${state.successful?.email}")
             onNavigateHome()
         }
-        if(state.error != null){
+        if (state.error != null) {
             Toast.makeText(context, "Error: ${state.error}", LENGTH_SHORT).show()
         }
         viewModel.resetData()
     }
 
-    if(state.isLoading){
-        androidx.compose.material3.CircularProgressIndicator()
+    if (state.isLoading) {
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            androidx.compose.material3.CircularProgressIndicator()
+        }
+
     }
 
 
@@ -224,17 +231,17 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome:()
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
-    ){
+    ) {
         ButtonComponent(
             modifier = Modifier
                 .fillMaxWidth(),
-                //.height(52.dp),
+            //.height(52.dp),
             text = "Ingresar",
             style = TextStyle(
                 fontSize = 16.sp
             ),
             onClick = {
-                      viewModel.signIn( email, password)
+                viewModel.signIn(email, password)
             },
             containerColor = ColorGeneral,
         )
@@ -248,15 +255,11 @@ fun LoginFooter() {
 }
 
 
-
 @Preview(showSystemUi = true)
 @Composable
 fun LoginScreenPreview() {
     LoginScreen(onNavigateHome = {})
 }
-
-
-
 
 
 //    OutlinedTextField(
