@@ -46,6 +46,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import io.h3llo.eco_eats.presentation.components.ImageComponent
 import io.h3llo.eco_eats.R
 import io.h3llo.eco_eats.presentation.components.ButtonComponent
+import io.h3llo.eco_eats.presentation.components.ButtonComponentLoading
 import io.h3llo.eco_eats.presentation.components.OutlinedTextFieldComponent
 import io.h3llo.eco_eats.ui.theme.ColorGeneral
 
@@ -215,15 +216,7 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome: (
         viewModel.resetData()
     }
 
-    if (state.isLoading) {
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            androidx.compose.material3.CircularProgressIndicator(color = ColorGeneral)
-        }
 
-    }
 
 
 
@@ -232,7 +225,7 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome: (
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
     ) {
-        ButtonComponent(
+        ButtonComponentLoading(
             modifier = Modifier
                 .fillMaxWidth(),
             //.height(52.dp),
@@ -243,7 +236,8 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome: (
             onClick = {
                 viewModel.signIn(email, password)
             },
-            containerColor = ColorGeneral,
+            isLoading = viewModel.state.isLoading,
+            containerColor = ColorGeneral
         )
     }
 

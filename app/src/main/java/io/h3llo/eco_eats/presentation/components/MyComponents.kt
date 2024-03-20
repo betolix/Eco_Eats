@@ -56,7 +56,7 @@ fun ImageComponent(
     modifier: Modifier = Modifier,
     @DrawableRes image: Int,
     description: String
-    ) {
+) {
     Image(
         painter = painterResource(id = image),
         contentDescription = description,
@@ -67,16 +67,16 @@ fun ImageComponent(
 @Composable
 fun SpacerComponent(
     modifier: Modifier = Modifier
-){
+) {
     Spacer(modifier = modifier)
 }
 
 @Composable
 fun TextComponent(
     modifier: Modifier = Modifier,
-    text:String,
+    text: String,
     style: TextStyle
-){
+) {
     Text(
         modifier = modifier,
         text = text,
@@ -91,21 +91,22 @@ fun ButtonComponent(
     style: TextStyle,
     icon: ImageVector? = null,
     descriptionIcon: String = "",
-    containerColor:Color = Color.Blue,
-    contentColor:Color = Color.White,
-    onClick:()->Unit
-    ){
+    containerColor: Color = Color.Blue,
+    contentColor: Color = Color.White,
+    onClick: () -> Unit
+) {
+
     Button(
         onClick = {
             onClick()
-                  },
+        },
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
             contentColor = contentColor
         )
     ) {
-        if(icon != null){
+        if (icon != null) {
             Icon(
                 imageVector = icon,
                 contentDescription = descriptionIcon
@@ -116,20 +117,68 @@ fun ButtonComponent(
             style = style
         )
     }
+
 }
+
+@Composable
+fun ButtonComponentLoading(
+    modifier: Modifier = Modifier,
+    text: String,
+    style: TextStyle,
+    icon: ImageVector? = null,
+    descriptionIcon: String = "",
+    containerColor: Color = Color.Blue,
+    contentColor: Color = Color.White,
+    isLoading: Boolean,
+    onClick: () -> Unit
+) {
+    if (isLoading) {
+
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            androidx.compose.material3.CircularProgressIndicator(color = ColorGeneral)
+        }
+
+    } else {
+        Button(
+            onClick = {
+                onClick()
+            },
+            modifier = modifier,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = containerColor,
+                contentColor = contentColor
+            )
+        ) {
+            if (icon != null) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = descriptionIcon
+                )
+            }
+            Text(
+                text = text,
+                style = style
+            )
+        }
+    }
+}
+
 
 @Composable
 fun OutlinedTextFieldComponent(
     modifier: Modifier = Modifier,
-    text:String,
-    textLabel:String,
+    text: String,
+    textLabel: String,
     colors: TextFieldColors,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardType: KeyboardType,
     imeAction: ImeAction,
     keyboardAction: KeyboardActions,
-    trailingIcon : @Composable (()->Unit)? =null,
-    onValueChange:(String)->Unit
+    trailingIcon: @Composable (() -> Unit)? = null,
+    onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
         modifier = Modifier,
@@ -141,7 +190,7 @@ fun OutlinedTextFieldComponent(
             Text(
                 text = textLabel,
                 color = Color.Black
-                )
+            )
         },
         shape = RoundedCornerShape(24.dp),
         colors = colors,
@@ -156,12 +205,11 @@ fun OutlinedTextFieldComponent(
 }
 
 
-
 @Composable
 fun DishItem(
     modifier: Modifier = Modifier,
     dish: Dish,
-    onClick:(Dish)->Unit
+    onClick: (Dish) -> Unit
 ) {
     Card(
         border = BorderStroke(
@@ -268,9 +316,9 @@ fun PagerDishHeaderComponent(
 
     Box(
         modifier = Modifier
-        .fillMaxWidth()
-        .clickable {
-            onClick(dish)
+            .fillMaxWidth()
+            .clickable {
+                onClick(dish)
             },
         contentAlignment = Alignment.TopCenter
     )
