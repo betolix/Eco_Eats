@@ -28,6 +28,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,6 +50,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import io.h3llo.eco_eats.domain.model.Dish
+import io.h3llo.eco_eats.presentation.components.CustomDialog
 import io.h3llo.eco_eats.presentation.components.DishItem
 import io.h3llo.eco_eats.presentation.components.PagerDishHeaderComponent
 import io.h3llo.eco_eats.presentation.components.SpacerComponent
@@ -63,6 +68,21 @@ fun DishScreen(
 
     val state = viewModel.state
     val pagerState = rememberPagerState()
+
+//    var openCustomDialog by remember {
+//        mutableStateOf(false)
+//    }
+
+    if(state.unauthorized != null){
+        CustomDialog(
+            showDialog = true,
+            title = "Informativo" ,
+            body = state.unauthorized,
+            dismiss = {
+                viewModel.updateDialog()
+            }
+        )
+    }
 
     Box(
         modifier = Modifier

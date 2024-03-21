@@ -42,8 +42,9 @@ class LoginViewModel @Inject constructor(val repository: LoginRepository) : View
                     }
                     is Result.Success -> {
                         state = state.copy(successful = result.data, isLoading = false )
-
                     }
+
+                    is Result.Unauthorized -> TODO()
                 }
             }.launchIn(viewModelScope)
 

@@ -4,6 +4,7 @@ package io.h3llo.eco_eats.presentation.components
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
@@ -34,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -44,6 +47,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import io.h3llo.eco_eats.R
@@ -363,8 +368,38 @@ fun PagerDishHeaderComponent(
                 )
             )
         }
-
     }
-
 }
 
+@Composable
+fun CustomDialog(
+    showDialog : Boolean,
+    title: String,
+    body:String,
+    dismiss:()->Unit
+) {
+    if(showDialog){
+        Dialog(
+            onDismissRequest = { /*TODO*/ },
+            properties = DialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false
+            )
+        ) {
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White)
+                    .padding(24.dp)
+            ){
+                Text(text = title)
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(text = body)
+                OutlinedButton(onClick = { dismiss() }) {
+                    Text(text = "Cerrar")
+                    
+                }
+            }            
+        }
+    }
+}

@@ -10,4 +10,6 @@ sealed class Result<T>( val data:T?=null, val message:String?=null) {
 
     class Loading<T>() : Result<T>()
 
+    class Unauthorized<T>(message: String) : Result<T>(message = message)
+
 }

@@ -6,5 +6,6 @@ import io.h3llo.eco_eats.domain.model.Dish
 data class DishState(
     val isLoading:Boolean=false,
     val error:String?=null,
-    val dishes:List<Dish>?=null
+    val dishes:List<Dish>?=null,
+    val unauthorized:String?=null
 )

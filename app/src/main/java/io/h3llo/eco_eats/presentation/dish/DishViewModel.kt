@@ -37,7 +37,9 @@ class DishViewModel @Inject constructor(val repository: DishRepository): ViewMod
                     }
                     is Result.Success -> {
                         state = state.copy(isLoading = false, dishes = result.data )
-
+                    }
+                    is Result.Unauthorized -> {
+                        state = state.copy(isLoading = false, unauthorized = result.message)
                     }
                 }
             }.launchIn(viewModelScope)
@@ -46,5 +48,8 @@ class DishViewModel @Inject constructor(val repository: DishRepository): ViewMod
 
     }
 
+    fun updateDialog() {
+        state = state.copy(unauthorized = null)
+    }
 
 }

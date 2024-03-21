@@ -33,7 +33,9 @@ class DishRepository @Inject constructor(val sharedPreferences: SharedPreference
 
             }else{
                 // TODO 401
-
+                if(response.code() == 401){
+                    emit(Result.Unauthorized("Token no válido o expirado"))
+                }
             }
 
         } catch (ex: IOException){
