@@ -23,7 +23,10 @@ class MainActivity : ComponentActivity() {
         Api.build()
 
         setContent {
-            SetupNavigationEcoEats()
+            Eco_EatsTheme(dynamicColor = false) {
+                SetupNavigationEcoEats()
+            }
+
         }
     }
 }

@@ -1,5 +1,6 @@
 package io.h3llo.eco_eats.presentation.welcome
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +26,7 @@ import io.h3llo.eco_eats.presentation.components.ButtonComponent
 import io.h3llo.eco_eats.presentation.components.ImageComponent
 import io.h3llo.eco_eats.presentation.components.SpacerComponent
 import io.h3llo.eco_eats.presentation.components.TextComponent
+import io.h3llo.eco_eats.ui.theme.Eco_EatsTheme
 
 @Composable
 fun WelcomeScreen(
@@ -32,7 +35,10 @@ fun WelcomeScreen(
 ) {
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color.White)) {
+        //.background(Color.White)
+        .background(MaterialTheme.colorScheme.surface)
+
+    ) {
 
         Box(modifier = Modifier
             .fillMaxWidth()
@@ -47,7 +53,8 @@ fun WelcomeScreen(
         Box(modifier = Modifier
             .fillMaxWidth()
             .weight(1f)
-            .background(Color.Gray),
+            .background(MaterialTheme.colorScheme.surface),
+            //.background(Color.Gray),
             contentAlignment = Alignment.BottomCenter
             ){
             WelcomeContent(
@@ -102,7 +109,8 @@ fun WelcomeHeader() {
             text = "Una vida saludable",
             style = TextStyle(
                 textAlign = TextAlign.Center,
-                color = Color.Black,
+                //color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Normal
             )
@@ -110,8 +118,12 @@ fun WelcomeHeader() {
     }
 }
 
-@Preview (showSystemUi = true)
+@Preview (name = "Light",showSystemUi = true)
+@Preview (name = "Dark", showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun WelcomeScreenPreview() {
-    WelcomeScreen(onClick = {})
+    Eco_EatsTheme(dynamicColor = false) {
+        WelcomeScreen(onClick = {})
+    }
+
 }

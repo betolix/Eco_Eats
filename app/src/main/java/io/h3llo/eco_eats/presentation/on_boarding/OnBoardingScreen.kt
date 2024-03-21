@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 
 
 import androidx.compose.runtime.Composable
@@ -52,7 +53,9 @@ fun OnBoardingScreen(
     )
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background( MaterialTheme.colorScheme.surface )
     ) {
         HorizontalPager(
             modifier = Modifier.weight(10f),
@@ -106,7 +109,8 @@ fun OnBoardingContent(onBoardingPage: OnBoardingPage) {
         TextComponent(
             text = onBoardingPage.title,
             style =  TextStyle(
-                color = Color.Black,
+                //color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -119,7 +123,8 @@ fun OnBoardingContent(onBoardingPage: OnBoardingPage) {
                 .padding(top = SMALL_PADDING),
             text = onBoardingPage.description,
             style =  TextStyle(
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurface,
+                //color = Color.Black,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
@@ -134,7 +139,7 @@ fun OnBoardingContent(onBoardingPage: OnBoardingPage) {
 @Composable
 fun OnBoardingFooter(pages: List<OnBoardingPage>, pagerState: PagerState) {
     repeat(pages.size){iteration ->
-        val color = if(pagerState.currentPage == iteration ) Color.Blue else Color.Gray
+        val color = if(pagerState.currentPage == iteration ) MaterialTheme.colorScheme.primary else Color.Gray
         Box(modifier = Modifier
             .padding(2.dp)
             .clip(CircleShape)
