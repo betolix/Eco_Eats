@@ -114,7 +114,7 @@ fun LoginContent(viewModel: LoginViewModel, state: LoginState, onNavigateHome: (
     val focusManager = LocalFocusManager.current
 
     var email by remember {
-        mutableStateOf("jledesma2509@gmail.com")
+        mutableStateOf("betolix@gmail.com")
     }
 
     var password by remember {
